@@ -1,0 +1,17 @@
+website:
+  sidebar:
+    contents:
+      - index.ipynb
+      - 00_core.ipynb
+      - section: calculus
+        contents:
+          - calculus/Untitled.ipynb
+      - section: linear-algebra
+        contents:
+          - linear-algebra/01_numpy.ipynb
+          - linear-algebra/02_matrices.ipynb
+          - linear-algebra/03_factorization.ipynb
+          - linear-algebra/04_statistics.ipynb
+      - section: probability-and-stat
+        contents:
+          - probability-and-stat/Untitled.ipynb
