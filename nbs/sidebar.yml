@@ -14,3 +14,6 @@ website:
       - section: Probability
         contents:
           - Probability/01_.ipynb
+      - section: Statistics
+        contents:
+          - Statistics/test.ipynb
