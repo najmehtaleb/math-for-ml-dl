@@ -4,7 +4,7 @@ website:
       - index.ipynb
       - section: Calculus
         contents:
-          - Calculus/01_.ipynb
+          - Calculus/01_calculus.ipynb
       - section: Linear Algebra
         contents:
           - Linear Algebra/01_numpy.ipynb
