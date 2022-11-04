@@ -13,7 +13,10 @@ website:
           - Linear Algebra/04_statistics.ipynb
       - section: Probability
         contents:
-          - Probability/01_.ipynb
+          - Probability/01_distributions.ipynb
+          - Probability/02_maximum_likelihood.ipynb
+          - Probability/03_bayesian_probability.ipynb
+          - Probability/04_information_theory.ipynb
       - section: Statistics
         contents:
           - Statistics/test.ipynb
