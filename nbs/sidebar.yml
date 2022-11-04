@@ -2,15 +2,15 @@ website:
   sidebar:
     contents:
       - index.ipynb
-      - section: calculus
+      - section: Calculus
         contents:
-          - calculus/01_.ipynb
-      - section: linear-algebra
+          - Calculus/01_.ipynb
+      - section: Linear Algebra
         contents:
-          - linear-algebra/01_numpy.ipynb
-          - linear-algebra/02_matrices.ipynb
-          - linear-algebra/03_factorization.ipynb
-          - linear-algebra/04_statistics.ipynb
-      - section: probability-and-stat
+          - Linear Algebra/01_numpy.ipynb
+          - Linear Algebra/02_matrices.ipynb
+          - Linear Algebra/03_factorization.ipynb
+          - Linear Algebra/04_statistics.ipynb
+      - section: Probability
         contents:
-          - probability-and-stat/01_.ipynb
+          - Probability/01_.ipynb
