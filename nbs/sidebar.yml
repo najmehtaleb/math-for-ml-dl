@@ -19,4 +19,4 @@ website:
           - Probability/04_information_theory.ipynb
       - section: Statistics
         contents:
-          - Statistics/test.ipynb
+          - Statistics/statistics.ipynb
