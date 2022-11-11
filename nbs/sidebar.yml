@@ -5,6 +5,9 @@ website:
       - section: Calculus
         contents:
           - Calculus/01_calculus.ipynb
+      - section: Definition
+        contents:
+          - Definition/definition.ipynb
       - section: Linear Algebra
         contents:
           - Linear Algebra/01_numpy.ipynb
@@ -13,10 +16,15 @@ website:
           - Linear Algebra/04_statistics.ipynb
       - section: Probability
         contents:
-          - Probability/01_distributions.ipynb
-          - Probability/02_maximum_likelihood.ipynb
-          - Probability/03_bayesian_probability.ipynb
-          - Probability/04_information_theory.ipynb
+          - Probability/01_intro.ipynb
+          - Probability/02_foundations.ipynb
+          - Probability/03_distributions.ipynb
+          - Probability/04_maximum_likelihood.ipynb
+          - Probability/05_bayesian_probability.ipynb
+          - Probability/06_information_theory.ipynb
+      - section: References
+        contents:
+          - References/references.ipynb
       - section: Statistics
         contents:
           - Statistics/statistics.ipynb
