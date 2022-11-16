@@ -14,7 +14,10 @@ website:
   
   navbar: 
     search: true 
-    title: "Najmeh Taleb" 
+    title: "Math for ML"
+    left:
+      - text: Home
+        href: "https://najmehtaleb.github.io/my-site/"
     right:
       - icon: github
         href: "https://github.com/najmehtaleb/math-for-ml-dl"
@@ -22,7 +25,6 @@ website:
         href: "https://twitter.com/NajmehTaleb"
         
   sidebar:
-    title: "Najmeh Taleb" 
     style: "floating"
     search: true
     collapse-level: 1
