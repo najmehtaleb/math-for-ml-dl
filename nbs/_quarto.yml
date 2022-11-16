@@ -12,33 +12,35 @@ website:
   open-graph: true
   repo-actions: [issue]
   
-  navbar:
-    background: primary
-    search: true
-    left:
-      - text: "Calculus"
-        href: calculus/01_calculus.ipynb
-      - text: "Linear Algebra"
-        menu: 
-        - linear-algebra/01_numpy.ipynb
-        - linear-algebra/02_matrices.ipynb 
-        - linear-algebra/03_factorization.ipynb 
-        - linear-algebra/03_factorization.ipynb 
-      - text: "Probability"
-        href: probability/*
-      - text: "Statistics"
-        href: statistics/*        
-      - text: "More"
-        menu: 
-          - definition/definition.ipynb
-          - code/code.ipynb
-          - references/references.ipynb
+  navbar: 
+    search: true 
+    title: "Najmeh Taleb" 
     right:
       - icon: github
         href: "https://github.com/najmehtaleb/math-for-ml-dl"
       - icon: twitter
         href: "https://twitter.com/NajmehTaleb"
         
-    
+  sidebar:
+    title: "Najmeh Taleb" 
+    style: "floating"
+    search: true
+    collapse-level: 1
+    contents:
+    - section: Linear Algebra
+      contents: linear-algebra/*
+    - section: Probbaility
+      contents: probability/*
+    - section: Statistics
+      contents: statistics/*
+    - section: Calculus
+      contents: calculus/*
+    - section: Code
+      contents: code/*
+    - section: Definition
+      contents: definition/*
+    - section: References
+      contents: references/*
 
+  
 metadata-files: [nbdev.yml]

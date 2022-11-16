@@ -2,7 +2,7 @@ project:
   output-dir: _docs
 
 website:
-  title: "Math for ML"
+  title: "math-for-ml-dl"
   site-url: "https://najmehtaleb.github.io/math-for-ml-dl"
   description: "Math for Machine Learning and Deep Learning"
   repo-branch: main
