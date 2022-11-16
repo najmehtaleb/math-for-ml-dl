@@ -2,8 +2,8 @@ project:
   output-dir: _docs
 
 website:
-  title: "math-for-ml-dl"
+  title: "Math for ML"
   site-url: "https://najmehtaleb.github.io/math-for-ml-dl"
-  description: "math for ml and dl"
+  description: "Math for Machine Learning and Deep Learning"
   repo-branch: main
   repo-url: "https://github.com/najmehtaleb/math-for-ml-dl"
