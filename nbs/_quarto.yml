@@ -14,25 +14,35 @@ website:
   
   navbar: 
     search: true 
-    title: "Math for ML"
+    title: Math for ML
     left:
       - text: Home
-        href: "https://najmehtaleb.github.io/my-site/"
+        href: https://najmehtaleb.github.io/my-site/
     right:
       - icon: github
-        href: "https://github.com/najmehtaleb/math-for-ml-dl"
+        href: https://github.com/najmehtaleb/math-for-ml-dl
       - icon: twitter
-        href: "https://twitter.com/NajmehTaleb"
+        href: https://twitter.com/NajmehTaleb
         
   sidebar:
-    style: "floating"
+    style: floating
     search: true
     collapse-level: 1
     contents:
     - section: Linear Algebra
-      contents: linear-algebra/*
+      contents: 
+      - linear-algebra/01-numpy.ipynb
+      - linear-algebra/02-matrices.ipynb
+      - linear-algebra/03-factorization.ipynb
+      - linear-algebra/04-statistics.ipynb
     - section: Probbaility
-      contents: probability/*
+      contents: 
+      - probability/01-intro.ipynb
+      - probability/02-foundations.ipynb
+      - probability/03-distributions.ipynb
+      - probability/04-maximum_likelihood.ipynb
+      - probability/05-bayesian_probability.ipynb
+      - probability/06-information_theory.ipynb
     - section: Statistics
       contents: statistics/*
     - section: Calculus

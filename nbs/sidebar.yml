@@ -2,32 +2,32 @@ website:
   sidebar:
     contents:
       - index.ipynb
-      - section: calculus
+      - section: 01-linear-algebra
         contents:
-          - calculus/01_calculus.ipynb
-      - section: code
+          - 01-linear-algebra/01-numpy.ipynb
+          - 01-linear-algebra/02-matrices.ipynb
+          - 01-linear-algebra/03-factorization.ipynb
+          - 01-linear-algebra/04-statistics.ipynb
+      - section: 02-probability
         contents:
-          - code/code.ipynb
-      - section: definition
+          - 02-probability/01-intro.ipynb
+          - 02-probability/02-foundations.ipynb
+          - 02-probability/03-distributions.ipynb
+          - 02-probability/04-maximum_likelihood.ipynb
+          - 02-probability/05-bayesian_probability.ipynb
+          - 02-probability/06-information_theory.ipynb
+      - section: 03-statistics
         contents:
-          - definition/definition.ipynb
-      - section: linear-algebra
+          - 03-statistics/statistics.ipynb
+      - section: 04-calculus
         contents:
-          - linear-algebra/01_numpy.ipynb
-          - linear-algebra/02_matrices.ipynb
-          - linear-algebra/03_factorization.ipynb
-          - linear-algebra/04_statistics.ipynb
-      - section: probability
+          - 04-calculus/01_calculus.ipynb
+      - section: 05-definition
         contents:
-          - probability/01_intro.ipynb
-          - probability/02_foundations.ipynb
-          - probability/03_distributions.ipynb
-          - probability/04_maximum_likelihood.ipynb
-          - probability/05_bayesian_probability.ipynb
-          - probability/06_information_theory.ipynb
-      - section: references
+          - 05-definition/definition.ipynb
+      - section: 06-code
         contents:
-          - references/references.ipynb
-      - section: statistics
+          - 06-code/code.ipynb
+      - section: 07-references
         contents:
-          - statistics/statistics.ipynb
+          - 07-references/references.ipynb
