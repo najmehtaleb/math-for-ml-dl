@@ -14,10 +14,11 @@ website:
   
   navbar: 
     search: true 
-    title: Math for ML
+    title: Math for Machine Learning
     left:
       - text: Home
         href: https://najmehtaleb.github.io/my-site/
+    
     right:
       - icon: github
         href: https://github.com/najmehtaleb/math-for-ml-dl
