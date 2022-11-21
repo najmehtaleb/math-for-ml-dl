@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>math-for-ml-dl - Maximum Likelihood</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="math-for-ml-dl - Maximum Likelihood">
+<meta property="og:description" content="Density estimation is the problem of estimating the probability distribution for a sample of observations from a problem domain.">
+<meta property="og:site-name" content="math-for-ml-dl">
+<meta name="twitter:title" content="math-for-ml-dl - Maximum Likelihood">
+<meta name="twitter:description" content="Density estimation is the problem of estimating the probability distribution for a sample of observations from a problem domain.">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Math for Machine Learning</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://najmehtaleb.github.io/my-site/">
+ <span class="menu-text">Home</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/najmehtaleb/math-for-ml-dl"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/NajmehTaleb"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Maximum Likelihood</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">Linear Algebra</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-linear-algebra/01-numpy.html" class="sidebar-item-text sidebar-link">NumPy</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-linear-algebra/02-matrices.html" class="sidebar-item-text sidebar-link">Matrices</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-linear-algebra/03-factorization.html" class="sidebar-item-text sidebar-link">Factorization</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-linear-algebra/04-statistics.html" class="sidebar-item-text sidebar-link">Statistics</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Probbaility</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-probability/01-intro.html" class="sidebar-item-text sidebar-link">Introduction</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-probability/02-foundations.html" class="sidebar-item-text sidebar-link">Joint, Marginal, and Conditional Probability</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-probability/03-distributions.html" class="sidebar-item-text sidebar-link">Probability Distributions</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-probability/04-maximum_likelihood.html" class="sidebar-item-text sidebar-link active">Maximum Likelihood</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-probability/05-bayesian_probability.html" class="sidebar-item-text sidebar-link">Bayesian Probability</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-probability/06-information_theory.html" class="sidebar-item-text sidebar-link">Information Theory</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Statistics</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Calculus</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Code</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Definition</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">References</span>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#maximum-likelihood-estimation" id="toc-maximum-likelihood-estimation" class="nav-link active" data-scroll-target="#maximum-likelihood-estimation">Maximum Likelihood Estimation</a>
+  <ul class="collapse">
+  <li><a href="#problem-of-probability-density-estimation" id="toc-problem-of-probability-density-estimation" class="nav-link" data-scroll-target="#problem-of-probability-density-estimation">Problem of Probability Density Estimation</a></li>
+  <li><a href="#maximum-likelihood-estimation-1" id="toc-maximum-likelihood-estimation-1" class="nav-link" data-scroll-target="#maximum-likelihood-estimation-1">Maximum Likelihood Estimation</a></li>
+  <li><a href="#relationship-to-machine-learning" id="toc-relationship-to-machine-learning" class="nav-link" data-scroll-target="#relationship-to-machine-learning">Relationship to Machine Learning</a></li>
+  </ul></li>
+  <li><a href="#linear-regression-with-maximum-likelihood-estimation" id="toc-linear-regression-with-maximum-likelihood-estimation" class="nav-link" data-scroll-target="#linear-regression-with-maximum-likelihood-estimation">Linear Regression With Maximum Likelihood Estimation</a>
+  <ul class="collapse">
+  <li><a href="#linear-regression-as-maximum-likelihood" id="toc-linear-regression-as-maximum-likelihood" class="nav-link" data-scroll-target="#linear-regression-as-maximum-likelihood">Linear Regression as Maximum Likelihood</a></li>
+  <li><a href="#least-squares-and-maximum-likelihood" id="toc-least-squares-and-maximum-likelihood" class="nav-link" data-scroll-target="#least-squares-and-maximum-likelihood">Least Squares and Maximum Likelihood</a></li>
+  </ul></li>
+  <li><a href="#logistic-regression-with-maximum-likelihood-estimation" id="toc-logistic-regression-with-maximum-likelihood-estimation" class="nav-link" data-scroll-target="#logistic-regression-with-maximum-likelihood-estimation">Logistic Regression With Maximum Likelihood Estimation</a>
+  <ul class="collapse">
+  <li><a href="#logistic-regression-and-log-odds" id="toc-logistic-regression-and-log-odds" class="nav-link" data-scroll-target="#logistic-regression-and-log-odds">Logistic Regression and Log-Odds</a></li>
+  <li><a href="#logistic-regression-as-maximum-likelihood" id="toc-logistic-regression-as-maximum-likelihood" class="nav-link" data-scroll-target="#logistic-regression-as-maximum-likelihood">Logistic Regression as Maximum Likelihood</a></li>
+  </ul></li>
+  <li><a href="#expectation-maximization-em-algorithm" id="toc-expectation-maximization-em-algorithm" class="nav-link" data-scroll-target="#expectation-maximization-em-algorithm">Expectation Maximization (EM Algorithm)</a>
+  <ul class="collapse">
+  <li><a href="#expectation-maximization-algorithm" id="toc-expectation-maximization-algorithm" class="nav-link" data-scroll-target="#expectation-maximization-algorithm">Expectation-Maximization Algorithm</a></li>
+  <li><a href="#gaussian-mixture-model-and-the-em-algorithm" id="toc-gaussian-mixture-model-and-the-em-algorithm" class="nav-link" data-scroll-target="#gaussian-mixture-model-and-the-em-algorithm">Gaussian Mixture Model and the EM Algorithm</a></li>
+  <li><a href="#example-of-gaussian-mixture-model" id="toc-example-of-gaussian-mixture-model" class="nav-link" data-scroll-target="#example-of-gaussian-mixture-model">Example of Gaussian Mixture Model</a></li>
+  </ul></li>
+  <li><a href="#probabilistic-model-selection-with-aic-bic-and-mdl" id="toc-probabilistic-model-selection-with-aic-bic-and-mdl" class="nav-link" data-scroll-target="#probabilistic-model-selection-with-aic-bic-and-mdl">Probabilistic Model Selection with AIC, BIC, and MDL</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/najmehtaleb/math-for-ml-dl/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Maximum Likelihood</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<p>Density estimation is the problem of estimating the probability distribution for a sample of observations from a problem domain. There are many techniques for solving density estimation, although a common framework used throughout the field of machine learning is maximum likelihood estimation. Maximum likelihood estimation involves defining a likelihood function for calculating the conditional probability of observing the data sample given a probability distribution and distribution parameters. This approach can be used to search a space of possible distributions and parameters. This flexible probabilistic framework also provides the foundation for many machine learning algorithms, including important methods such as linear regression and logistic regression for predicting numeric values and class labels respectively, but also more generally for deep learning artificial neural networks. In this tutorial, you will discover a gentle introduction to maximum likelihood estimation. After reading this tutorial, you will know: * Maximum Likelihood Estimation is a probabilistic framework for solving the problem of density estimation. * It involves maximizing a likelihood function in order to find the probability distribution and parameters that best explain the observed data. * It provides a framework for predictive modeling in machine learning where finding model parameters can be framed as an optimization problem.</p>
+<section id="maximum-likelihood-estimation" class="level2">
+<h2 class="anchored" data-anchor-id="maximum-likelihood-estimation">Maximum Likelihood Estimation</h2>
+<section id="problem-of-probability-density-estimation" class="level3">
+<h3 class="anchored" data-anchor-id="problem-of-probability-density-estimation">Problem of Probability Density Estimation</h3>
+<p>A common modeling problem involves how to estimate a joint probability distribution for a dataset. For example, given a sample of observation (X) from a domain (x 1 , x 2 , x 3 , · · · , x n ), where each observation is drawn independently from the domain with the same probability distribution (so-called independent and identically distributed, i.i.d., or close to it). Density estimation involves selecting a probability distribution function and the parameters of that distribution that best explain the joint probability distribution of the observed data (X).</p>
+<ul>
+<li>How do you choose the probability distribution function?</li>
+<li>How do you choose the parameters for the probability distribution function?</li>
+</ul>
+<p>This problem is made more challenging if the sample (X) drawn from the population is small and has noise, meaning that any evaluation of an estimated probability density function and its parameters will have some error. There are many techniques for solving this problem, although two common approaches are: * Maximum a Posteriori (MAP), a Bayesian method. * Maximum Likelihood Estimation (MLE), frequentist method.</p>
+<p>The main difference is that MLE assumes that all solutions are equally likely beforehand, whereas MAP allows prior information about the form of the solution to be harnessed. In this tutorial, we will take a closer look at the MLE method and its relationship to applied machine learning.</p>
+</section>
+<section id="maximum-likelihood-estimation-1" class="level3">
+<h3 class="anchored" data-anchor-id="maximum-likelihood-estimation-1">Maximum Likelihood Estimation</h3>
+<p>One solution to probability density estimation is referred to as Maximum Likelihood Estimation, or MLE for short. Maximum Likelihood Estimation involves treating the problem as an optimization or search problem, where we seek a set of parameters that results in the best fit for the joint probability of the data sample (X). First, it involves defining a parameter called theta (θ) that defines both the choice of the probability density function and the parameters of that distribution. It may be a vector of numerical values whose values change smoothly and map to different probability distributions and their parameters. In Maximum Likelihood Estimation, we wish to maximize the probability of observing the data from the joint probability distribution given a specific probability distribution and its parameters, stated formally as:</p>
+<p>P (X|θ)</p>
+<p>This conditional probability is often stated using the semicolon (;) notation instead of the bar notation (|) because θ is not a random variable, but instead an unknown parameter. For example:</p>
+<p>P (X; θ)</p>
+<p>Or:</p>
+<p>P (x 1 , x 2 , x 3 , · · · , x n ; θ)</p>
+<p>This resulting conditional probability is referred to as the likelihood of observing the data given the model parameters and written using the notation L() to denote the likelihood function. For example:</p>
+<p>L(X; θ)</p>
+<p>The objective of Maximum Likelihood Estimation is to find the set of parameters (θ) that maximize the likelihood function, e.g.&nbsp;result in the largest likelihood value.</p>
+<p>max L(X; θ)</p>
+<p>We can unpack the conditional probability calculated by the likelihood function. Given that the sample is comprised of n examples, we can frame this as the joint probability of the observed data samples x 1 , x 2 , x 3 , · · · , x n in X given the probability distribution parameters (θ).</p>
+<p>L(x 1 , x 2 , x 3 , · · · , x n ; θ)</p>
+<p>The joint probability distribution can be restated as the multiplication of the conditional probability for observing each example given the distribution parameters.</p>
+<p>n Y P (x i ; θ)</p>
+<p>Multiplying many small probabilities together can be numerically unstable in practice, therefore, it is common to restate this problem as the sum of the log conditional probabilities of observing each example given the model parameters.</p>
+<p>Where log with base-e called the natural logarithm is commonly used.</p>
+<p>This product over many probabilities can be inconvenient […] it is prone to numerical underflow. To obtain a more convenient but equivalent optimization problem, we observe that taking the logarithm of the likelihood does not change its arg max but does conveniently transform a product into a sum</p>
+<p>Given the frequent use of log in the likelihood function, it is commonly referred to as a log-likelihood function. It is common in optimization problems to prefer to minimize the cost function, rather than to maximize it. Therefore, the negative of the log-likelihood function is used, referred to generally as a Negative Log-Likelihood (NLL) function.</p>
+<p>In software, we often phrase both as minimizing a cost function. Maximum likelihood thus becomes minimization of the negative log-likelihood (NLL) …</p>
+</section>
+<section id="relationship-to-machine-learning" class="level3">
+<h3 class="anchored" data-anchor-id="relationship-to-machine-learning">Relationship to Machine Learning</h3>
+<p>This problem of density estimation is directly related to applied machine learning. We can frame the problem of fitting a machine learning model as the problem of probability density estimation. Specifically, the choice of model and model parameters is referred to as a modeling hypothesis h, and the problem involves finding h that best explains the data X.</p>
+<p>P (X; h)</p>
+<p>We can, therefore, find the modeling hypothesis that maximizes the likelihood function.</p>
+<p>max L(X; h)</p>
+<p>Or, more fully:</p>
+<p>This provides the basis for estimating the probability density of a dataset, typically used in unsupervised machine learning algorithms; for example: * Clustering algorithms.</p>
+<p>Using the expected log joint probability as a key quantity for learning in a proba- bility model with hidden variables is better known in the context of the celebrated expectation maximization or EM algorithm.</p>
+<p>The Maximum Likelihood Estimation framework is also a useful tool for supervised machine learning. This applies to data where we have input and output variables, where the output variable may be a numerical value or a class label in the case of regression and classification predictive modeling retrospectively. We can state this as the conditional probability of the output y given the input (X) given the modeling hypothesis (h).</p>
+<p>max L(y|X; h)</p>
+<p>Or, more fully:</p>
+<p>The maximum likelihood estimator can readily be generalized to the case where our goal is to estimate a conditional probability P (y|x; θ) in order to predict y given x. This is actually the most common situation because it forms the basis for most supervised learning.</p>
+<p>This means that the same Maximum Likelihood Estimation framework that is generally used for density estimation can be used to find a supervised learning model and parameters. This provides the basis for foundational linear modeling techniques, such as: * Linear Regression, for predicting a numerical value. * Logistic Regression, for binary classification.</p>
+<p>In the case of linear regression, the model is constrained to a line and involves finding a set of coefficients for the line that best fits the observed data. Fortunately, this problem can be solved analytically (e.g.&nbsp;directly using linear algebra). In the case of logistic regression, the model defines a line and involves finding a set of coefficients for the line that best separates the classes. This cannot be solved analytically and is often solved by searching the space of possible coefficient values using an efficient optimization algorithm such as the BFGS algorithm or variants.</p>
+<p>Both methods can also be solved less efficiently using a more general optimization algorithm such as stochastic gradient descent. In fact, most machine learning models can be framed under the maximum likelihood estimation framework, providing a useful and consistent way to approach predictive modeling as an optimization problem. An important benefit of the maximum likelihood estimator in machine learning is that as the size of the dataset increases, the quality of the estimator continues to improve.</p>
+<p>In this tutorial, you discovered a gentle introduction to maximum likelihood estimation. Specifi- cally, you learned: * Maximum Likelihood Estimation is a probabilistic framework for solving the problem of density estimation. * It involves maximizing a likelihood function in order to find the probability distribution and parameters that best explain the observed data. * It provides a framework for predictive modeling in machine learning where finding model parameters can be framed as an optimization problem.</p>
+</section>
+</section>
+<section id="linear-regression-with-maximum-likelihood-estimation" class="level2">
+<h2 class="anchored" data-anchor-id="linear-regression-with-maximum-likelihood-estimation">Linear Regression With Maximum Likelihood Estimation</h2>
+<p>Linear regression is a classical model for predicting a numerical quantity. The parameters of a linear regression model can be estimated using a least squares procedure or by a maximum likelihood estimation procedure. Maximum likelihood estimation is a probabilistic framework for automatically finding the probability distribution and parameters that best describe the observed data. Supervised learning can be framed as a conditional probability problem, and maximum likelihood estimation can be used to fit the parameters of a model that best summarizes the conditional probability distribution, so-called conditional maximum likelihood estimation. A linear regression model can be fit under this framework and can be shown to derive an identical solution to a least squares approach. In this tutorial, you will discover linear regression with maximum likelihood estimation. After reading this tutorial, you will know: * Linear regression is a model for predicting a numerical quantity and maximum likelihood estimation is a probabilistic framework for estimating model parameters. * Coefficients of a linear regression model can be estimated using a negative log-likelihood function from maximum likelihood estimation. * The negative log-likelihood function can be used to derive the least squares solution to linear regression.</p>
+<section id="linear-regression-as-maximum-likelihood" class="level3">
+<h3 class="anchored" data-anchor-id="linear-regression-as-maximum-likelihood">Linear Regression as Maximum Likelihood</h3>
+</section>
+<section id="least-squares-and-maximum-likelihood" class="level3">
+<h3 class="anchored" data-anchor-id="least-squares-and-maximum-likelihood">Least Squares and Maximum Likelihood</h3>
+</section>
+</section>
+<section id="logistic-regression-with-maximum-likelihood-estimation" class="level2">
+<h2 class="anchored" data-anchor-id="logistic-regression-with-maximum-likelihood-estimation">Logistic Regression With Maximum Likelihood Estimation</h2>
+<section id="logistic-regression-and-log-odds" class="level3">
+<h3 class="anchored" data-anchor-id="logistic-regression-and-log-odds">Logistic Regression and Log-Odds</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> log</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> exp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>prob <span class="op">=</span> <span class="fl">0.8</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Probability is: </span><span class="sc">{</span>prob<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>odds <span class="op">=</span> prob <span class="op">/</span> (<span class="dv">1</span> <span class="op">-</span> prob)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Odds is: </span><span class="sc">{</span>odds<span class="sc">: .1f}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>prob <span class="op">=</span> odds<span class="op">/</span> (odds <span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Probability is: </span><span class="sc">{</span>prob<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>logodds <span class="op">=</span> log(odds)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Log-Odds is: </span><span class="sc">{</span>logodds<span class="sc">: 0.2f}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>prob <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> exp(<span class="op">-</span>logodds))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Probability is: </span><span class="sc">{</span>prob<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="logistic-regression-as-maximum-likelihood" class="level3">
+<h3 class="anchored" data-anchor-id="logistic-regression-as-maximum-likelihood">Logistic Regression as Maximum Likelihood</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> likelihood(y, yhat):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> yhat<span class="op">*</span>y <span class="op">+</span> (<span class="dv">1</span> <span class="op">-</span> yhat)<span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span> y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>y, yhat <span class="op">=</span> <span class="dv">1</span>, <span class="fl">0.9</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'y=</span><span class="sc">{</span>y<span class="sc">}</span><span class="ss">, yhat=</span><span class="sc">{</span>yhat<span class="sc">}</span><span class="ss">, likelihood: </span><span class="sc">{</span>likelihood(y, yhat)<span class="sc">:.3f}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>y, yhat <span class="op">=</span> <span class="dv">1</span>, <span class="fl">0.1</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'y=</span><span class="sc">{</span>y<span class="sc">}</span><span class="ss">, yhat=</span><span class="sc">{</span>yhat<span class="sc">}</span><span class="ss">, likelihood: </span><span class="sc">{</span>likelihood(y, yhat)<span class="sc">:.3f}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>y, yhat <span class="op">=</span> <span class="dv">0</span>, <span class="fl">0.1</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'y=</span><span class="sc">{</span>y<span class="sc">}</span><span class="ss">, yhat=</span><span class="sc">{</span>yhat<span class="sc">}</span><span class="ss">, likelihood: </span><span class="sc">{</span>likelihood(y, yhat)<span class="sc">:.3f}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>y, yhat <span class="op">=</span> <span class="dv">0</span>, <span class="fl">0.9</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'y=</span><span class="sc">{</span>y<span class="sc">}</span><span class="ss">, yhat=</span><span class="sc">{</span>yhat<span class="sc">}</span><span class="ss">, likelihood: </span><span class="sc">{</span>likelihood(y, yhat)<span class="sc">:.3f}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="expectation-maximization-em-algorithm" class="level2">
+<h2 class="anchored" data-anchor-id="expectation-maximization-em-algorithm">Expectation Maximization (EM Algorithm)</h2>
+<section id="expectation-maximization-algorithm" class="level3">
+<h3 class="anchored" data-anchor-id="expectation-maximization-algorithm">Expectation-Maximization Algorithm</h3>
+</section>
+<section id="gaussian-mixture-model-and-the-em-algorithm" class="level3">
+<h3 class="anchored" data-anchor-id="gaussian-mixture-model-and-the-em-algorithm">Gaussian Mixture Model and the EM Algorithm</h3>
+</section>
+<section id="example-of-gaussian-mixture-model" class="level3">
+<h3 class="anchored" data-anchor-id="example-of-gaussian-mixture-model">Example of Gaussian Mixture Model</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpy <span class="im">import</span> hstack</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpy.random <span class="im">import</span> normal</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.mixture <span class="im">import</span> GaussianMixture</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>X1 <span class="op">=</span> normal(loc<span class="op">=</span><span class="dv">20</span>, scale<span class="op">=</span><span class="dv">5</span>, size<span class="op">=</span><span class="dv">3000</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>X2 <span class="op">=</span> normal(loc<span class="op">=</span><span class="dv">40</span>, scale<span class="op">=</span><span class="dv">5</span>, size<span class="op">=</span><span class="dv">7000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> hstack((X1, X2))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X.reshape(<span class="bu">len</span>(X), <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> GaussianMixture(n_components<span class="op">=</span><span class="dv">2</span>, init_params<span class="op">=</span><span class="st">'random'</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>model.fit(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<style>#sk-container-id-3 {color: black;background-color: white;}#sk-container-id-3 pre{padding: 0;}#sk-container-id-3 div.sk-toggleable {background-color: white;}#sk-container-id-3 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-3 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-3 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-3 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-3 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-3 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-3 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-3 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-3 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-3 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-3 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-3 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-3 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-3 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-3 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-3 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-3 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-3 div.sk-item {position: relative;z-index: 1;}#sk-container-id-3 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-3 div.sk-item::before, #sk-container-id-3 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-3 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-3 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-3 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-3 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-3 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-3 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-3 div.sk-label-container {text-align: center;}#sk-container-id-3 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-3 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-3" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GaussianMixture(init_params='random', n_components=2)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" checked=""><label for="sk-estimator-id-3" class="sk-toggleable__label sk-toggleable__label-arrow">GaussianMixture</label><div class="sk-toggleable__content"><pre>GaussianMixture(init_params='random', n_components=2)</pre></div></div></div></div></div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>yhat <span class="op">=</span> model.predict(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(yhat[:<span class="dv">100</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[0 1 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0 1 0 0 0 0 0 0 0
+ 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+ 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0]</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(yhat[<span class="op">-</span><span class="dv">100</span>:])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="probabilistic-model-selection-with-aic-bic-and-mdl" class="level2">
+<h2 class="anchored" data-anchor-id="probabilistic-model-selection-with-aic-bic-and-mdl">Probabilistic Model Selection with AIC, BIC, and MDL</h2>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

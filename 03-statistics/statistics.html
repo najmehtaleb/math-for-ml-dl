@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>math-for-ml-dl - Statistics Methods for Machine Learning</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="math-for-ml-dl - Statistics Methods for Machine Learning">
+<meta property="og:site-name" content="math-for-ml-dl">
+<meta name="twitter:title" content="math-for-ml-dl - Statistics Methods for Machine Learning">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Math for Machine Learning</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://najmehtaleb.github.io/my-site/">
+ <span class="menu-text">Home</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/najmehtaleb/math-for-ml-dl"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/NajmehTaleb"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Statistics Methods for Machine Learning</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">Linear Algebra</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-linear-algebra/01-numpy.html" class="sidebar-item-text sidebar-link">NumPy</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-linear-algebra/02-matrices.html" class="sidebar-item-text sidebar-link">Matrices</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-linear-algebra/03-factorization.html" class="sidebar-item-text sidebar-link">Factorization</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-linear-algebra/04-statistics.html" class="sidebar-item-text sidebar-link">Statistics</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">Probbaility</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-probability/01-intro.html" class="sidebar-item-text sidebar-link">Introduction</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-probability/02-foundations.html" class="sidebar-item-text sidebar-link">Joint, Marginal, and Conditional Probability</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-probability/03-distributions.html" class="sidebar-item-text sidebar-link">Probability Distributions</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-probability/04-maximum_likelihood.html" class="sidebar-item-text sidebar-link">Maximum Likelihood</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-probability/05-bayesian_probability.html" class="sidebar-item-text sidebar-link">Bayesian Probability</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-probability/06-information_theory.html" class="sidebar-item-text sidebar-link">Information Theory</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Statistics</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Calculus</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Code</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Definition</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">References</span>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#foundation" id="toc-foundation" class="nav-link active" data-scroll-target="#foundation">Foundation</a>
+  <ul class="collapse">
+  <li><a href="#gaussian-and-summary-stats" id="toc-gaussian-and-summary-stats" class="nav-link" data-scroll-target="#gaussian-and-summary-stats">Gaussian and Summary Stats</a></li>
+  <li><a href="#simple-data-visualization" id="toc-simple-data-visualization" class="nav-link" data-scroll-target="#simple-data-visualization">Simple Data Visualization</a></li>
+  <li><a href="#random-numbers" id="toc-random-numbers" class="nav-link" data-scroll-target="#random-numbers">Random Numbers</a></li>
+  <li><a href="#law-of-large-numbers" id="toc-law-of-large-numbers" class="nav-link" data-scroll-target="#law-of-large-numbers">Law of Large Numbers</a></li>
+  <li><a href="#central-limit-theorem" id="toc-central-limit-theorem" class="nav-link" data-scroll-target="#central-limit-theorem">Central Limit Theorem</a></li>
+  </ul></li>
+  <li><a href="#hypothesis-testing" id="toc-hypothesis-testing" class="nav-link" data-scroll-target="#hypothesis-testing">Hypothesis Testing</a>
+  <ul class="collapse">
+  <li><a href="#statistical-hypothesis-testing" id="toc-statistical-hypothesis-testing" class="nav-link" data-scroll-target="#statistical-hypothesis-testing">Statistical Hypothesis Testing</a></li>
+  <li><a href="#statistical-distributions" id="toc-statistical-distributions" class="nav-link" data-scroll-target="#statistical-distributions">Statistical Distributions</a></li>
+  <li><a href="#critical-values" id="toc-critical-values" class="nav-link" data-scroll-target="#critical-values">Critical Values</a></li>
+  <li><a href="#covariance-and-correlation" id="toc-covariance-and-correlation" class="nav-link" data-scroll-target="#covariance-and-correlation">Covariance and Correlation</a></li>
+  <li><a href="#significance-tests" id="toc-significance-tests" class="nav-link" data-scroll-target="#significance-tests">Significance Tests</a></li>
+  <li><a href="#effect-size" id="toc-effect-size" class="nav-link" data-scroll-target="#effect-size">Effect Size</a></li>
+  <li><a href="#statistical-power" id="toc-statistical-power" class="nav-link" data-scroll-target="#statistical-power">Statistical Power</a></li>
+  </ul></li>
+  <li><a href="#resampling-methods" id="toc-resampling-methods" class="nav-link" data-scroll-target="#resampling-methods">Resampling Methods</a>
+  <ul class="collapse">
+  <li><a href="#introduction-to-resampling" id="toc-introduction-to-resampling" class="nav-link" data-scroll-target="#introduction-to-resampling">Introduction to Resampling</a></li>
+  <li><a href="#estimation-with-bootstrap" id="toc-estimation-with-bootstrap" class="nav-link" data-scroll-target="#estimation-with-bootstrap">Estimation with Bootstrap</a></li>
+  <li><a href="#estimation-with-cross-validation" id="toc-estimation-with-cross-validation" class="nav-link" data-scroll-target="#estimation-with-cross-validation">Estimation with Cross-Validation</a></li>
+  </ul></li>
+  <li><a href="#estimation-statistics" id="toc-estimation-statistics" class="nav-link" data-scroll-target="#estimation-statistics">Estimation Statistics</a>
+  <ul class="collapse">
+  <li><a href="#introduction-to-estimation-statistics" id="toc-introduction-to-estimation-statistics" class="nav-link" data-scroll-target="#introduction-to-estimation-statistics">Introduction to Estimation Statistics</a></li>
+  <li><a href="#tolerance-intervals" id="toc-tolerance-intervals" class="nav-link" data-scroll-target="#tolerance-intervals">Tolerance Intervals</a></li>
+  <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals">Confidence Intervals</a></li>
+  <li><a href="#prediction-intervals" id="toc-prediction-intervals" class="nav-link" data-scroll-target="#prediction-intervals">Prediction Intervals</a></li>
+  </ul></li>
+  <li><a href="#nonparametric-methods" id="toc-nonparametric-methods" class="nav-link" data-scroll-target="#nonparametric-methods">Nonparametric Methods</a>
+  <ul class="collapse">
+  <li><a href="#rank-data" id="toc-rank-data" class="nav-link" data-scroll-target="#rank-data">Rank Data</a></li>
+  <li><a href="#normality-tests" id="toc-normality-tests" class="nav-link" data-scroll-target="#normality-tests">Normality Tests</a></li>
+  <li><a href="#make-data-normal" id="toc-make-data-normal" class="nav-link" data-scroll-target="#make-data-normal">Make Data Normal</a></li>
+  <li><a href="#number-summary" id="toc-number-summary" class="nav-link" data-scroll-target="#number-summary">5-Number Summary</a></li>
+  <li><a href="#rank-correlation" id="toc-rank-correlation" class="nav-link" data-scroll-target="#rank-correlation">Rank Correlation</a></li>
+  <li><a href="#rank-significance-tests" id="toc-rank-significance-tests" class="nav-link" data-scroll-target="#rank-significance-tests">Rank Significance Tests</a></li>
+  <li><a href="#independence-test" id="toc-independence-test" class="nav-link" data-scroll-target="#independence-test">Independence Test</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/najmehtaleb/math-for-ml-dl/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Statistics Methods for Machine Learning</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<section id="foundation" class="level2">
+<h2 class="anchored" data-anchor-id="foundation">Foundation</h2>
+<section id="gaussian-and-summary-stats" class="level3">
+<h3 class="anchored" data-anchor-id="gaussian-and-summary-stats">Gaussian and Summary Stats</h3>
+</section>
+<section id="simple-data-visualization" class="level3">
+<h3 class="anchored" data-anchor-id="simple-data-visualization">Simple Data Visualization</h3>
+</section>
+<section id="random-numbers" class="level3">
+<h3 class="anchored" data-anchor-id="random-numbers">Random Numbers</h3>
+</section>
+<section id="law-of-large-numbers" class="level3">
+<h3 class="anchored" data-anchor-id="law-of-large-numbers">Law of Large Numbers</h3>
+</section>
+<section id="central-limit-theorem" class="level3">
+<h3 class="anchored" data-anchor-id="central-limit-theorem">Central Limit Theorem</h3>
+</section>
+</section>
+<section id="hypothesis-testing" class="level2">
+<h2 class="anchored" data-anchor-id="hypothesis-testing">Hypothesis Testing</h2>
+<section id="statistical-hypothesis-testing" class="level3">
+<h3 class="anchored" data-anchor-id="statistical-hypothesis-testing">Statistical Hypothesis Testing</h3>
+</section>
+<section id="statistical-distributions" class="level3">
+<h3 class="anchored" data-anchor-id="statistical-distributions">Statistical Distributions</h3>
+</section>
+<section id="critical-values" class="level3">
+<h3 class="anchored" data-anchor-id="critical-values">Critical Values</h3>
+</section>
+<section id="covariance-and-correlation" class="level3">
+<h3 class="anchored" data-anchor-id="covariance-and-correlation">Covariance and Correlation</h3>
+</section>
+<section id="significance-tests" class="level3">
+<h3 class="anchored" data-anchor-id="significance-tests">Significance Tests</h3>
+</section>
+<section id="effect-size" class="level3">
+<h3 class="anchored" data-anchor-id="effect-size">Effect Size</h3>
+</section>
+<section id="statistical-power" class="level3">
+<h3 class="anchored" data-anchor-id="statistical-power">Statistical Power</h3>
+</section>
+</section>
+<section id="resampling-methods" class="level2">
+<h2 class="anchored" data-anchor-id="resampling-methods">Resampling Methods</h2>
+<section id="introduction-to-resampling" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-to-resampling">Introduction to Resampling</h3>
+</section>
+<section id="estimation-with-bootstrap" class="level3">
+<h3 class="anchored" data-anchor-id="estimation-with-bootstrap">Estimation with Bootstrap</h3>
+</section>
+<section id="estimation-with-cross-validation" class="level3">
+<h3 class="anchored" data-anchor-id="estimation-with-cross-validation">Estimation with Cross-Validation</h3>
+</section>
+</section>
+<section id="estimation-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="estimation-statistics">Estimation Statistics</h2>
+<section id="introduction-to-estimation-statistics" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-to-estimation-statistics">Introduction to Estimation Statistics</h3>
+</section>
+<section id="tolerance-intervals" class="level3">
+<h3 class="anchored" data-anchor-id="tolerance-intervals">Tolerance Intervals</h3>
+</section>
+<section id="confidence-intervals" class="level3">
+<h3 class="anchored" data-anchor-id="confidence-intervals">Confidence Intervals</h3>
+</section>
+<section id="prediction-intervals" class="level3">
+<h3 class="anchored" data-anchor-id="prediction-intervals">Prediction Intervals</h3>
+</section>
+</section>
+<section id="nonparametric-methods" class="level2">
+<h2 class="anchored" data-anchor-id="nonparametric-methods">Nonparametric Methods</h2>
+<section id="rank-data" class="level3">
+<h3 class="anchored" data-anchor-id="rank-data">Rank Data</h3>
+</section>
+<section id="normality-tests" class="level3">
+<h3 class="anchored" data-anchor-id="normality-tests">Normality Tests</h3>
+</section>
+<section id="make-data-normal" class="level3">
+<h3 class="anchored" data-anchor-id="make-data-normal">Make Data Normal</h3>
+</section>
+<section id="number-summary" class="level3">
+<h3 class="anchored" data-anchor-id="number-summary">5-Number Summary</h3>
+</section>
+<section id="rank-correlation" class="level3">
+<h3 class="anchored" data-anchor-id="rank-correlation">Rank Correlation</h3>
+</section>
+<section id="rank-significance-tests" class="level3">
+<h3 class="anchored" data-anchor-id="rank-significance-tests">Rank Significance Tests</h3>
+</section>
+<section id="independence-test" class="level3">
+<h3 class="anchored" data-anchor-id="independence-test">Independence Test</h3>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

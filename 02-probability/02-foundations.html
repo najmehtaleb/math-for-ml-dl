@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>math-for-ml-dl - Joint, Marginal, and Conditional Probability</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="math-for-ml-dl - Joint, Marginal, and Conditional Probability">
+<meta property="og:description" content="In machine learning, we are likely to work with many random variables.">
+<meta property="og:site-name" content="math-for-ml-dl">
+<meta name="twitter:title" content="math-for-ml-dl - Joint, Marginal, and Conditional Probability">
+<meta name="twitter:description" content="In machine learning, we are likely to work with many random variables.">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Math for Machine Learning</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://najmehtaleb.github.io/my-site/">
+ <span class="menu-text">Home</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/najmehtaleb/math-for-ml-dl"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/NajmehTaleb"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Joint, Marginal, and Conditional Probability</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">Linear Algebra</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-linear-algebra/01-numpy.html" class="sidebar-item-text sidebar-link">NumPy</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-linear-algebra/02-matrices.html" class="sidebar-item-text sidebar-link">Matrices</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-linear-algebra/03-factorization.html" class="sidebar-item-text sidebar-link">Factorization</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-linear-algebra/04-statistics.html" class="sidebar-item-text sidebar-link">Statistics</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Probbaility</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-probability/01-intro.html" class="sidebar-item-text sidebar-link">Introduction</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-probability/02-foundations.html" class="sidebar-item-text sidebar-link active">Joint, Marginal, and Conditional Probability</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-probability/03-distributions.html" class="sidebar-item-text sidebar-link">Probability Distributions</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-probability/04-maximum_likelihood.html" class="sidebar-item-text sidebar-link">Maximum Likelihood</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-probability/05-bayesian_probability.html" class="sidebar-item-text sidebar-link">Bayesian Probability</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-probability/06-information_theory.html" class="sidebar-item-text sidebar-link">Information Theory</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Statistics</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Calculus</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Code</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Definition</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">References</span>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#probability-for-one-random-variable" id="toc-probability-for-one-random-variable" class="nav-link active" data-scroll-target="#probability-for-one-random-variable">Probability for One Random Variable</a></li>
+  <li><a href="#probability-for-multiple-random-variables" id="toc-probability-for-multiple-random-variables" class="nav-link" data-scroll-target="#probability-for-multiple-random-variables">Probability for Multiple Random Variables</a>
+  <ul class="collapse">
+  <li><a href="#joint-probability-for-two-variables" id="toc-joint-probability-for-two-variables" class="nav-link" data-scroll-target="#joint-probability-for-two-variables">Joint Probability for Two Variables</a></li>
+  <li><a href="#marginal-probability" id="toc-marginal-probability" class="nav-link" data-scroll-target="#marginal-probability">Marginal Probability</a></li>
+  <li><a href="#conditional-probability" id="toc-conditional-probability" class="nav-link" data-scroll-target="#conditional-probability">Conditional Probability</a></li>
+  </ul></li>
+  <li><a href="#probability-for-independence-and-exclusivity" id="toc-probability-for-independence-and-exclusivity" class="nav-link" data-scroll-target="#probability-for-independence-and-exclusivity">Probability for Independence and Exclusivity</a>
+  <ul class="collapse">
+  <li><a href="#independence" id="toc-independence" class="nav-link" data-scroll-target="#independence">Independence</a></li>
+  <li><a href="#exclusivity" id="toc-exclusivity" class="nav-link" data-scroll-target="#exclusivity">Exclusivity</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/najmehtaleb/math-for-ml-dl/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Joint, Marginal, and Conditional Probability</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<ul>
+<li>Joint probability is the probability of two or more events occurring simultaneously.</li>
+<li>Marginal probability is the probability of an event irrespective of the outcome of other variables.</li>
+<li>Conditional probability is the probability of one event occurring in the presence of one or more other events.</li>
+</ul>
+<section id="probability-for-one-random-variable" class="level2">
+<h2 class="anchored" data-anchor-id="probability-for-one-random-variable">Probability for One Random Variable</h2>
+</section>
+<section id="probability-for-multiple-random-variables" class="level2">
+<h2 class="anchored" data-anchor-id="probability-for-multiple-random-variables">Probability for Multiple Random Variables</h2>
+<p>In machine learning, we are likely to work with many random variables. For example, given a table of data, such as in excel, each row represents a separate observation or event, and each column represents a separate random variable. Variables may be either discrete, meaning that they take on a finite set of values, or continuous, meaning they take on a real or numerical value. As such, we are interested in the probability across two or more random variables.</p>
+<p>This is complicated as there are many ways that random variables can interact, which, in turn, impacts their probabilities. This can be simplified by reducing the discussion to just two random variables (X, Y ), although the principles generalize to multiple variables</p>
+<p>Therefore, we will introduce the probability of multiple random variables as the probability of event A and event B, which in shorthand is X = A and Y = B. We assume that the two variables are related or dependent in some way. As such, there are three main types of probability we might want to consider; they are: * Joint Probability: Probability of events A and B. * Marginal Probability: Probability of event A given variable Y . * Conditional Probability: Probability of event A given event B.</p>
+<p>These types of probability form the basis of much of predictive modeling with problems such as classification and regression. For example: * The probability of a row of data is the joint probability across each input variable. * The probability of a specific value of one input variable is the marginal probability across the values of the other input variables. * The predictive model itself is an estimate of the conditional probability of an output given an input example.</p>
+<section id="joint-probability-for-two-variables" class="level3">
+<h3 class="anchored" data-anchor-id="joint-probability-for-two-variables">Joint Probability for Two Variables</h3>
+<p>We may be interested in the probability of two simultaneous events, e.g.&nbsp;the outcomes of two different random variables. The probability of two (or more) events is called the joint probability. The joint probability of two or more random variables is referred to as the joint probability distribution. For example, the joint probability of event A and event B is written formally as: P (A and B) = P (A ∩ B) = P (A, B)</p>
+<p>The joint probability for events A and B is calculated as the probability of event A given event B multiplied by the probability of event B. This can be stated formally as follows:</p>
+<p>P (A ∩ B) = P (A given B) × P (B)</p>
+<p>The calculation of the joint probability is sometimes called the fundamental rule of probability or the product rule of probability. Here, P (A given B) is the probability of event A given that event B has occurred, called the conditional probability, described below. The joint probability is symmetrical, meaning that P (A ∩ B) is the same as P (B ∩ A).</p>
+</section>
+<section id="marginal-probability" class="level3">
+<h3 class="anchored" data-anchor-id="marginal-probability">Marginal Probability</h3>
+<p>We may be interested in the probability of an event for one random variable, irrespective of the outcome of another random variable. For example, the probability of X = A for all outcomes of Y . The probability of one event in the presence of all (or a subset of) outcomes of the other random variable is called the marginal probability or the marginal distribution. The marginal probability of one random variable in the presence of additional random variables is referred to as the marginal probability distribution.</p>
+<p>P (X = A) = y∈YX P (X = A, Y = y)</p>
+<p>This is another important foundational rule in probability, referred to as the sum rule. The marginal probability is different from the conditional probability (described next) because it considers the union of all events for the second variable rather than the probability of a single event.</p>
+</section>
+<section id="conditional-probability" class="level3">
+<h3 class="anchored" data-anchor-id="conditional-probability">Conditional Probability</h3>
+<p>We may be interested in the probability of an event given the occurrence of another event. The probability of one event given the occurrence of another event is called the conditional probability. The conditional probability of one to one or more random variables is referred to as the conditional probability distribution. For example, the conditional probability of event A given event B is written formally as:</p>
+<p>P (A given B) = P (A|B)</p>
+<p>The conditional probability for events A given event B is calculated as follows: P (A|B) = P (A ∩ B) / P (B)</p>
+</section>
+</section>
+<section id="probability-for-independence-and-exclusivity" class="level2">
+<h2 class="anchored" data-anchor-id="probability-for-independence-and-exclusivity">Probability for Independence and Exclusivity</h2>
+<p>When considering multiple random variables, it is possible that they do not interact. We may know or assume that two variables are not dependent upon each other instead are independent. Alternately, the variables may interact but their events may not occur simultaneously, referred to as exclusivity.</p>
+<section id="independence" class="level3">
+<h3 class="anchored" data-anchor-id="independence">Independence</h3>
+<p>If one variable is not dependent on a second variable, this is called independence or statistical independence. This has an impact on calculating the probabilities of the two variables. For example, we may be interested in the joint probability of independent events A and B, which is the same as the probability of A and the probability of B. Probabilities are combined using multiplication, therefore the joint probability of independent events is calculated as the probability of event A multiplied by the probability of event B. This can be stated formally as follows: Joint Probability : P (A ∩ B) = P (A) × P (B)</p>
+<p>As we might intuit, the marginal probability for an event for an independent random variable is simply the probability of the event. It is the idea of probability of a single random variable that are familiar with:</p>
+<p>Marginal Probability : P (A)</p>
+<p>We refer to the marginal probability of an independent probability as simply the probability.</p>
+<p>Similarly, the conditional probability of A given B when the variables are independent is simply the probability of A as the probability of B has no effect. For example:</p>
+<p>Conditional Probability : P (A|B) = P (A)</p>
+<p>We may be familiar with the notion of statistical independence from sampling. This assumes that one sample is unaffected by prior samples and does not affect future samples. Many machine learning algorithms assume that samples from a domain are independent to each other and come from the same probability distribution, referred to as independent and identically distributed, or i.i.d. for short.</p>
+</section>
+<section id="exclusivity" class="level3">
+<h3 class="anchored" data-anchor-id="exclusivity">Exclusivity</h3>
+<p>If the occurrence of one event excludes the occurrence of other events, then the events are said to be mutually exclusive. The probability of the events are said to be disjoint, meaning that they cannot interact, are strictly independent. If the probability of event A is mutually exclusive with event B, then the joint probability of event A and event B is zero. P (A ∩ B) = 0.0</p>
+<p>Instead, the probability of an outcome can be described as event A or event B, stated formally as follows:</p>
+<p>P (A or B) = P (A ∪ B) = P (A) + P (B)</p>
+<p>If the events are not mutually exclusive, we may be interested in the outcome of either event. The probability of non-mutually exclusive events is calculated as the probability of event A and the probability of event B minus the probability of both events occurring simultaneously. This can be stated formally as follows:</p>
+<p>P (A ∪ B) = P (A) + P (B) − P (A ∩ B)</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
