@@ -32,18 +32,18 @@ website:
     contents:
     - section: Linear Algebra
       contents: 
-      - linear-algebra/01-numpy.ipynb
-      - linear-algebra/02-matrices.ipynb
-      - linear-algebra/03-factorization.ipynb
-      - linear-algebra/04-statistics.ipynb
+      - 01-linear-algebra/01-numpy.ipynb
+      - 01-linear-algebra/02-matrices.ipynb
+      - 01-linear-algebra/03-factorization.ipynb
+      - 01-linear-algebra/04-statistics.ipynb
     - section: Probbaility
       contents: 
-      - probability/01-intro.ipynb
-      - probability/02-foundations.ipynb
-      - probability/03-distributions.ipynb
-      - probability/04-maximum_likelihood.ipynb
-      - probability/05-bayesian_probability.ipynb
-      - probability/06-information_theory.ipynb
+      - 02-probability/01-intro.ipynb
+      - 02-probability/02-foundations.ipynb
+      - 02-probability/03-distributions.ipynb
+      - 02-probability/04-maximum_likelihood.ipynb
+      - 02-probability/05-bayesian_probability.ipynb
+      - 02-probability/06-information_theory.ipynb
     - section: Statistics
       contents: statistics/*
     - section: Calculus
